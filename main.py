@@ -1,17 +1,18 @@
 from fastapi import FastAPI
 
+from manager.curse_manager import count_convert
 from curse_parser import get_curse
+from database.pydantic_models import Convert
 
 
 app = FastAPI()
 
 
 @app.get('/')
-def today_curse():
-    return get_curse(url='https://www.cbr.ru/scripts/XML_daily.asp')
+async def today_curse():
+    return await get_curse()
 
 
-@app.get('/convert')
-def convert_rub():
-    return {'c'}
-
+@app.post('/convert/')
+async def convert_valute(convert: Convert):
+    return await count_convert(convert=convert)
