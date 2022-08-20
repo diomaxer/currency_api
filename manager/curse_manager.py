@@ -1,11 +1,18 @@
-from curse_parser import convert_valute
-from database.pydantic_models import Convert
+import datetime
+from typing import List
+
+from curse_parser import  Parser
+from database.pydantic_models import Convert, Amount, Currency
 
 
-async def count_convert(convert: Convert):
-    currensy = await convert_valute(convert.from_char_code, convert.to_char_code)
-    if len(currensy) != 2:
-            return {"error": "char code doesn't exist"}
-    amount = currensy['v1'] / currensy['v2'] * convert.sum
-    return round(amount, 2)
+class CurseManager:
+    @staticmethod
+    async def get_all_courses(date: datetime.date=None) -> List[Currency]:
+        return await Parser.get_all_courses(date=date)
+
+    @staticmethod
+    async def convert_currency(convert: Convert) -> Amount :
+        currency = await Parser.get_currencies(convert=convert)
+        amount = currency.sum / currency.sum2 * convert.sum
+        return Amount(sum=round(amount, 2))
 
