@@ -1,7 +1,7 @@
 import datetime
 from typing import List
 
-from curse_parser import  Parser
+from parser.curse_parser import  Parser
 from database.pydantic_models import Convert, Amount, Currency
 
 
