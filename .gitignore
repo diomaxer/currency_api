@@ -1,0 +1,11 @@
+# Compiled Python Code
+*.pyc
+
+# PyCharm
+.idea
+
+# VirtualEnv
+.venv
+
+# PyTest
+.pytest_cache
