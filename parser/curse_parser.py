@@ -34,6 +34,7 @@ class Parser:
                     num_code=elem.find('NumCode').text,
                     char_code=elem.find('CharCode').text,
                     name=elem.find('Name').text,
+                    nominal=int(elem.find('Nominal').text),
                     value=float(elem.find('Value').text.replace(',', '.'))
 
                 )

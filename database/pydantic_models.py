@@ -27,6 +27,7 @@ class Currency(BaseModel):
     num_code: int
     char_code: str
     name: str
+    nominal: int
     value: float
 
 
