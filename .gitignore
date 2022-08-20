@@ -1,5 +1,6 @@
 # Compiled Python Code
 *.pyc
+.__pycache__
 
 # PyCharm
 .idea
