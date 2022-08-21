@@ -10,10 +10,10 @@ app = FastAPI()
 
 
 @app.get(
-    path='/',
+    path="/",
     response_model=List[Currency],
-    summary='Exchange rates',
-    description='Exchange rates according to the Central Bank of the Russian Federation',
+    summary="Exchange rates",
+    description="Exchange rates according to the Central Bank of the Russian Federation",
     responses={
         404: {
             "content": {"application/json": {"example": {"detail": "data available after 1993-01-01"}}},
@@ -24,10 +24,10 @@ async def today_curse(date: datetime.date=None) -> List[Currency]:
 
 
 @app.post(
-    path='/convert/',
+    path="/convert/",
     response_model=Amount,
-    summary='Currency conversion',
-    description='Currency conversion at the rate of the Central Bank of the Russian Federation',
+    summary="Currency conversion",
+    description="Currency conversion at the rate of the Central Bank of the Russian Federation",
     responses={
         400: {
             "content": {"application/json": {"example": {
