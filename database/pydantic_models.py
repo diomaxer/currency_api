@@ -1,18 +1,22 @@
+import datetime
+
 from datetime import date
+from typing import List
 from fastapi import HTTPException
 from starlette import status
 from pydantic import BaseModel, validator
 
 
-class Convert(BaseModel):
-    sum: float
-    from_char_code: str
-    to_char_code: str
-    date: date | None
+class CharCodeCurrency(BaseModel):
+    char_code: str
 
-    @validator("from_char_code", "to_char_code")
+    @validator("char_code")
     def upper_char_code(cls, v):
         return v.upper()
+
+
+class Date(BaseModel):
+    date: datetime.date | None
 
     @validator("date")
     def check_year(cls, v):
@@ -23,9 +27,21 @@ class Convert(BaseModel):
         return v
 
 
-class Currency(BaseModel):
+class Convert(CharCodeCurrency, Date):
+    sum: float
+    to_char_code: str
+
+    @validator("to_char_code")
+    def upper_char_code(cls, v):
+        return v.upper()
+
+
+class MultiCurrency(Date):
+    char_codes: List[CharCodeCurrency]
+
+
+class Currency(CharCodeCurrency):
     num_code: int
-    char_code: str
     name: str
     nominal: int
     value: float
