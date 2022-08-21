@@ -10,11 +10,11 @@ class Convert(BaseModel):
     to_char_code: str
     date: date | None
 
-    @validator('from_char_code', 'to_char_code')
+    @validator("from_char_code", "to_char_code")
     def upper_char_code(cls, v):
         return v.upper()
 
-    @validator('date')
+    @validator("date")
     def check_year(cls, v):
         if v < date(1997, 1, 1):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data available after 1997-01-01")
@@ -34,6 +34,3 @@ class Currency(BaseModel):
 class Amount(BaseModel):
     sum: float
 
-
-class CountAmount(Amount):
-    sum2: float
