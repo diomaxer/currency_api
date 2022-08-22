@@ -12,7 +12,7 @@ app = FastAPI()
 @app.get(
     path="/",
     response_model=List[Currency],
-    summary="popular exchange rates",
+    summary="Popular exchange rates",
     description="USD & EUR exchange rates according to the Central Bank of the Russian Federation",
     responses={
         400: {
