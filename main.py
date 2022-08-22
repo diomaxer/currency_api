@@ -37,8 +37,8 @@ async def today_curse(date: datetime.date = None) -> List[Currency]:
 @app.get(
     path="/all_courses/",
     response_model=List[Currency],
-    summary="Exchange rates",
-    description="Exchange rates according to the Central Bank of the Russian Federation",
+    summary="All exchange rates",
+    description="All exchange rates according to the Central Bank of the Russian Federation",
     responses={
         400: {
             "content": {"application/json": {"example": {
@@ -55,10 +55,10 @@ async def today_curse(date: datetime.date = None) -> List[Currency]:
 
 
 @app.post(
-    path="/multiple_curses/",
+    path="/current_curses/",
     response_model=List[Currency],
-    summary="Multiple currency exchange rate",
-    description="Multiple currency exchange rates according to the Central Bank of the Russian Federation",
+    summary="Current currency exchange rate",
+    description="Current currency exchange rates according to the Central Bank of the Russian Federation",
     responses={
         400: {
             "content": {"application/json": {"example": {
@@ -78,7 +78,8 @@ async def today_curse(multi_currency: MultiCurrency) -> List[Currency]:
     path="/convert/",
     response_model=Amount,
     summary="Currency conversion",
-    description="Currency conversion at the rate of the Central Bank of the Russian Federation",
+    description="Currency conversion at the rate of the Central Bank of the Russian Federation. "
+                "char_code: currency wich convert,  sum: amount of currency, char_code_to: currency into convert",
     responses={
         400: {
             "content": {"application/json": {"example": {
