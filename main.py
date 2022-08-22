@@ -79,7 +79,10 @@ async def today_curse(multi_currency: MultiCurrency) -> List[Currency]:
     response_model=Amount,
     summary="Currency conversion",
     description="Currency conversion at the rate of the Central Bank of the Russian Federation. "
-                "date: Optional \nchar_code: currency wich convert\n  sum: amount of currency\n char_code_to: currency into convert",
+                "date: Optional, "
+                "char_code: currency which convert, "
+                "sum: amount of currency, "
+                "char_code_to: currency into convert",
     responses={
         400: {
             "content": {"application/json": {"example": {
