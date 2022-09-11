@@ -30,12 +30,11 @@ async def today_curse(date: datetime.date = None) -> List[Currency]:
         date=date if date else datetime.date.today(),
         char_codes=[CharCodeCurrency(char_code="USD"), CharCodeCurrency(char_code="EUR")]
     )
-    print(popular_currency)
     return await CurseManager.get_multi_curses(multi_currency=popular_currency)
 
 
 @app.get(
-    path="/all_courses/",
+    path="/all_courses",
     response_model=List[Currency],
     summary="All exchange rates",
     description="All exchange rates according to the Central Bank of the Russian Federation",
@@ -54,11 +53,11 @@ async def today_curse(date: datetime.date = None) -> List[Currency]:
     return await CurseManager.get_all_courses(date=date)
 
 
-@app.post(
-    path="/current_curses/",
-    response_model=List[Currency],
-    summary="Current currency exchange rate",
-    description="Current currency exchange rates according to the Central Bank of the Russian Federation",
+@app.get(
+    path="/char_codes",
+    response_model=List[CharCodeCurrency],
+    summary="All currency codes",
+    description="Get all available currency codes",
     responses={
         400: {
             "content": {"application/json": {"example": {
@@ -70,12 +69,12 @@ async def today_curse(date: datetime.date = None) -> List[Currency]:
             "content": {"application/json": {"example": {"detail": "data available after 1993-01-01"}}},
         }}
 )
-async def today_curse(multi_currency: MultiCurrency) -> List[Currency]:
-    return await CurseManager.get_multi_curses(multi_currency=multi_currency)
+async def currency_codes(date: datetime.date = None) -> List[CharCodeCurrency]:
+    return await CurseManager.get_all_char_codes(date=date)
 
 
 @app.post(
-    path="/convert/",
+    path="/convert",
     response_model=Amount,
     summary="Currency conversion",
     description="Currency conversion at the rate of the Central Bank of the Russian Federation. "

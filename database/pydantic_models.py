@@ -49,4 +49,3 @@ class Currency(CharCodeCurrency):
 
 class Amount(BaseModel):
     sum: float
-

@@ -14,3 +14,4 @@ class Parser:
         encoding = r.encoding if "charset" in r.headers.get("content-type", "").lower() else None
         soup = BeautifulSoup(r.content, "xml", from_encoding=encoding)
         return soup
+
