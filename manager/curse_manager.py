@@ -11,6 +11,27 @@ from database.pydantic_models import Convert, Amount, Currency, MultiCurrency, C
 
 class CurseManager:
     @staticmethod
+    async def get_multi_curses(multi_currency: MultiCurrency = None) -> List[Currency]:
+        if multi_currency.date and multi_currency.date < datetime.date(1993, 1, 1):
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data available after 1997-01-01")
+        response = await Parser.get_url(date=multi_currency.date)
+        currency_info = []
+        currencies = response.find_all("CharCode", string=[code.char_code for code in multi_currency.char_codes])
+        for currency in currencies:
+            elem = currency.find_parent("Valute")
+            currency_info.append(
+                Currency(
+                    num_code=elem.find("NumCode").text,
+                    char_code=elem.find("CharCode").text,
+                    name=elem.find("Name").text,
+                    nominal=int(elem.find("Nominal").text),
+                    value=float(elem.find("Value").text.replace(',', '.'))
+
+                )
+            )
+        return currency_info
+
+    @staticmethod
     async def get_current_curse(char_code: str, date: datetime.date = None) -> Currency:
         if date and date < datetime.date(1993, 1, 1):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data available after 1997-01-01")
