@@ -3,10 +3,10 @@ Pet project. Exchange rate parser
 
 Methods:
 
-      GET all currency codes (char_codes)
       GET popular rates (USD, EUR)
       GET current rate
       GET all rates
+      GET all currency codes (char_codes)
       POST convert currency
 
 Stack: FastAPI, pydantic, requests, bs4
