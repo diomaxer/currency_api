@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from fastapi import HTTPException
 from starlette import status
 
-from parser.curse_parser import Parser
+from parsing.curse_parser import Parser
 from database.pydantic_models import Convert, Amount, Currency, MultiCurrency, CharCodeCurrency
 
 

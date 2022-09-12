@@ -1,7 +1,7 @@
 import datetime
 
 from datetime import date
-from typing import List
+from typing import List, Optional
 from fastapi import HTTPException
 from starlette import status
 from pydantic import BaseModel, validator
@@ -16,7 +16,7 @@ class CharCodeCurrency(BaseModel):
 
 
 class Date(BaseModel):
-    date: datetime.date | None
+    date: Optional[datetime.date]
 
     @validator("date")
     def check_year(cls, v):
