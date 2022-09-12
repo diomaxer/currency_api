@@ -7,7 +7,7 @@ from starlette import status
 from pydantic import BaseModel, validator
 
 
-class CharCodeCurrency(BaseModel):
+class CurrencyCode(BaseModel):
     char_code: str
 
     @validator("char_code")
@@ -27,7 +27,7 @@ class Date(BaseModel):
         return v
 
 
-class Convert(CharCodeCurrency, Date):
+class Convert(CurrencyCode, Date):
     sum: float
     to_char_code: str
 
@@ -36,11 +36,11 @@ class Convert(CharCodeCurrency, Date):
         return v.upper()
 
 
-class MultiCurrency(Date):
-    char_codes: List[CharCodeCurrency]
+class MultiCurrencyCodes(Date):
+    char_codes: List[CurrencyCode]
 
 
-class Currency(CharCodeCurrency):
+class Currency(CurrencyCode):
     num_code: int
     name: str
     nominal: int

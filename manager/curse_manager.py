@@ -6,13 +6,13 @@ from fastapi import HTTPException
 from starlette import status
 
 from parsing.curse_parser import Parser
-from database.pydantic_models import Convert, Amount, Currency, MultiCurrency, CharCodeCurrency
+from models.pydantic_models import Convert, Amount, Currency, MultiCurrencyCodes, CurrencyCode
 
 
 class CurseManager:
     @staticmethod
-    async def get_multi_curses(multi_currency: MultiCurrency = None) -> List[Currency]:
-        if multi_currency.date and multi_currency.date < datetime.date(1993, 1, 1):
+    async def get_multi_curses(multi_currency: MultiCurrencyCodes = None) -> List[Currency]:
+        if multi_currency.date and multi_currency.date < datetime.date(1997, 1, 1):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data available after 1997-01-01")
         response = await Parser.get_url(date=multi_currency.date)
         currency_info = []
@@ -33,7 +33,7 @@ class CurseManager:
 
     @staticmethod
     async def get_current_curse(char_code: str, date: datetime.date = None) -> Currency:
-        if date and date < datetime.date(1993, 1, 1):
+        if date and date < datetime.date(1997, 1, 1):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data available after 1997-01-01")
         response = await Parser.get_url(date=date)
         elem = response.find("CharCode", string=char_code).find_parent("Valute")
@@ -49,8 +49,8 @@ class CurseManager:
     @staticmethod
     async def get_all_courses(date: datetime.date = None) -> List[Currency]:
         if date:
-            if date < datetime.date(1993, 1, 1):
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data available after 1993-01-01")
+            if date < datetime.date(1997, 1, 1):
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data available after 1997-01-01")
             if date > datetime.date.today():
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="date can't be greater then today")
         currency_info = []
@@ -70,12 +70,12 @@ class CurseManager:
         return currency_info
 
     @staticmethod
-    async def get_all_char_codes(date: datetime.date = None) -> List[CharCodeCurrency]:
-        if date and date < datetime.date(1993, 1, 1):
+    async def get_all_char_codes(date: datetime.date = None) -> List[CurrencyCode]:
+        if date and date < datetime.date(1997, 1, 1):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data available after 1997-01-01")
         response = await Parser.get_url(date=date)
         elems = response.find_all("Valute")
-        char_codes = [CharCodeCurrency(char_code=elem.find('CharCode').text) for elem in elems]
+        char_codes = [CurrencyCode(char_code=elem.find('CharCode').text) for elem in elems]
         return char_codes
 
     @staticmethod
