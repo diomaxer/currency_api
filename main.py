@@ -22,7 +22,7 @@ app = FastAPI()
         },
 
         404: {
-            "content": {"application/json": {"example": {"detail": "data available after 1993-01-01"}}},
+            "content": {"application/json": {"example": {"detail": "data available after 1997-01-01"}}},
         }}
 )
 async def today_curse(date: datetime.date = None) -> List[Currency]:
