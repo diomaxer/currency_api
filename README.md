@@ -13,4 +13,4 @@ Stack: FastAPI, pydantic, requests, bs4
 
 Source of currency: https://www.cbr.ru/
 
-link on working project: https://polar-tundra-69502.herokuapp.com/docs
+Link on working project: https://polar-tundra-69502.herokuapp.com/docs
